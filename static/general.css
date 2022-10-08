@@ -17,3 +17,8 @@
 .top-nav a:active {
     color: darkcyan
 }
+
+#books_table td {
+    text-align: center;
+    padding: 6px;
+}

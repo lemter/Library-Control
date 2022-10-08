@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <title>Library Control</title>
+        <link rel="stylesheet" href="\static/general.css">
+    </head>
+    <body>
+        <div class="top-nav">
+            <a href="/home">Home</a>
+            <a href="/books">Books</a>
+            <a href="/readers">Readers</a>
+            <a href="/borrows">Borrows</a>
+        </div>
+        <div>
+            <h3>{{book_name}}</h3>
+            <p>Book ID: {{book_id}}</p>
+            <p>Author: {{book_author}}</p>
+            <div>
+                <input id="new_name" type="text" placeholder="New book name">
+                <button onclick="server.changeBookName({{book_id}}, document.getElementById('new_name').value)">Change name</button>
+            </div>
+            <div>
+                <input id="new_author" type="text" placeholder="New author full name">
+                <button onclick="server.changeAuthorName({{book_id}}, document.getElementById('new_author').value)">Change author</button>
+            </div>
+            <button onclick="server.deleteBook({{book_id}})">Delete</button>
+        </div>
+    </body>
+</html>
