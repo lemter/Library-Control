@@ -18,7 +18,12 @@
     color: darkcyan
 }
 
-#books_table td {
+.table_list td {
+    text-align: center;
+    padding: 6px;
+}
+
+.table_list th {
     text-align: center;
     padding: 6px;
 }

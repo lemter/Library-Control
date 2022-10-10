@@ -1,0 +1,39 @@
+<html>
+    <head>
+        <title>Library Control - Readers</title>
+        <link rel="stylesheet" href="static/general.css">
+    </head>
+    <body>
+        <div class="top-nav">
+            <a href="/home">Home</a>
+            <a href="/books">Books</a>
+            <a href="/readers">Readers</a>
+            <a href="/borrows">Borrows</a>
+        </div>
+        <div>
+            <h3>Add new reader</h3>
+            <input type="text" id="reader_name" placeholder="Reader first name">
+            <input type="text" id="reader_lastname" placeholder="Reader last name">
+            <button onclick="server.addReader(document.getElementById('reader_name').value, document.getElementById('reader_lastname').value)")>Add reader</button>
+        </div>
+        <div>
+            <h3>Readers list</h3>
+            <table class="table_list" id="readers_table">
+                <tr>
+                    <th>ID</th>
+                    <th>First name</th>
+                    <th>Last name</th>
+                    <th>Change</th>
+                </tr>
+                {% for index, f_name, l_name in readers %}
+                <tr>
+                    <td>{{index}}</td>
+                    <td>{{f_name}}</td>
+                    <td>{{l_name}}</td>
+                    <td><button class="reader_btn" onclick="window.location.replace('/readers/' + ({{index}}))"></button></td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </body>
+</html>
