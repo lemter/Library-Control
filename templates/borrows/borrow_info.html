@@ -1,0 +1,47 @@
+<html>
+    <head>
+        <title>Library Control</title>
+        <link rel="stylesheet" href="\static/general.css">
+    </head>
+    <body>
+        <div class="top-nav">
+            <a href="/home">Home</a>
+            <a href="/books">Books</a>
+            <a href="/readers">Readers</a>
+            <a href="/borrows">Borrows</a>
+            <a class="logout" onclick="server.deauth()">Logout</a>
+        </div>
+        <div>
+            <h3>Borrow ID: {{borrow[0]}}</h3>
+            <p>Borrow status: {{borrow[10]}}</p>
+            <p>Taking date: {{borrow[6]}} {{borrow[7]}}</p>
+            {% if borrow[8] %}
+            <p>Return date: {{borrow[8]}} {{borrow[9]}}</p>
+            {% else %}
+            <p>Return date: Expected</p>
+            {% endif %}
+            <h4>Reader ID: {{borrow[1]}}</h4>
+            <p>Reader name: {{borrow[2]}}</p>
+            <h4>Book ID: {{borrow[3]}}</h4>
+            <p>Book name: {{borrow[4]}}</p>
+            <p>Book author: {{borrow[5]}}</p>
+            <div>
+                <input id="new_b_reader" type="text" placeholder="New reader id">
+                <button onclick="server.changeReaderName({{borrow[0]}}, document.getElementById('new_b_reader').value)">Change reader</button>
+            </div>
+            <div>
+                <input id="new_b_book" type="text" placeholder="New book id">
+                <button onclick="server.changeReaderLastName({{borrow[0]}}, document.getElementById('new_b_book').value)">Change book</button>
+            </div>
+            <div>
+                <input id="new_b_takingdate" type="text" placeholder="New taking date">
+                <input id="new_b_takingtime" type="text" placeholder="New taking time">
+                <button onclick="server.changeReaderLastName({{borrow[0]}}, document.getElementById('new_b_takingdate').value, document.getElementById('new_b_takingtime').value)">Change taking time</button>
+            </div>
+            {% if borrow[10] != 'Submitted' %}
+            <button onclick="server.submite_borrow({{borrow[0]}})">Set submited</button>
+            {% endif %}
+            <button onclick="server.deleteBorrow({{borrow[0]}})">Delete</button>
+        </div>
+    </body>
+</html>

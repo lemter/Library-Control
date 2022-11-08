@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Library Control</title>
+        <title>Library Control - Borrows</title>
         <link rel="stylesheet" href="static/general.css">
     </head>
     <body>
@@ -11,21 +11,24 @@
             <a href="/borrows">Borrows</a>
             <a class="logout" onclick="server.deauth()">Logout</a>
         </div>
-        <div>
-            <h3>Find your borrows</h3>
-            <input id="reader_id" type="text" placeholder="Your reader id">
-            <button onclick="server.mainpage(document.getElementById('reader_id').value)">Found</button>
-        </div>
-        {% if borrows %}
-        <table>
-            <tr>
-                <th>Reader</th>
-                <th>Book</th>
-                <th>Taking</th>
-                <th>Return</th>
-                <th>Status</th>
-            </tr>
-            {% for borrow_id, reader_id, reader_name, book_id, book_name, book_author, taking_date, taking_time, return_date, return_time, status in borrows %}
+    </body>
+    <div>
+        <h3>Add new borrow</h3>
+        <input type="text" id="reader_id" placeholder="Reader ID">
+        <input type="text" id="book_id" placeholder="Book ID">
+        <button onclick="server.addBorrow(document.getElementById('reader_id').value, document.getElementById('book_id').value)">Add borrow</button>
+    </div>
+    <div>
+        <h3>Borrows list</h3>
+            <table class="table_list" id="borrows_table">
+                <tr>
+                    <th>Reader</th>
+                    <th>Book</th>
+                    <th>Taking</th>
+                    <th>Return</th>
+                    <th>Status</th>
+                </tr>
+                {% for borrow_id, reader_id, reader_name, book_id, book_name, book_author, taking_date, taking_time, return_date, return_time, status in borrows %}
                 <tr>
                     <td>ID {{reader_id}}<br>
                         {{reader_name}}</td>
@@ -42,8 +45,7 @@
                     <td>{{status}}</td>
                     <td><button class="borrow_btn" onclick="window.location.replace('/borrows/' + ({{borrow_id}}))">Info</button></td>
                 </tr>
-            {% endfor %}
-        </table>
-        {% endif %}
-    </body>
+                {% endfor %}
+            </table>    
+    </div>
 </html>
