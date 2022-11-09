@@ -257,7 +257,7 @@ def borrows():
             JOIN readers ON (borrows.reader_id = readers.reader_id)
             JOIN books ON (borrows.book_id = books.book_id)""")
             borrows = cursor.fetchall()
-            return LibControl.render(render_template("temp_pages/borrows.html", borrows = borrows))
+            return LibControl.render(render_template("borrows/borrows.html", borrows = borrows))
 
 @app.route("/borrows/<borrow_id>", methods=['POST', 'GET'])
 def borrow_info(borrow_id):
@@ -286,7 +286,7 @@ def borrow_info(borrow_id):
             JOIN books ON (borrows.book_id = books.book_id)
             WHERE borrow_id = {borrow_id}""")
             borrow = cursor.fetchone()
-            return LibControl.render(render_template("temp_pages/borrow_info.html", borrow = borrow))
+            return LibControl.render(render_template("borrows/borrow_info.html", borrow = borrow))
 
 @app.route("/auth")
 def auth():
