@@ -1,0 +1,7 @@
+PostgreSQL 14
+Python 3.9.6 or above
+Install next Python libraries:
+- flask
+- psycopg2
+- jyserver
+- datetime
