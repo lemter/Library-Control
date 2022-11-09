@@ -1,16 +1,67 @@
-<html>
-    <head>
-        <title>Library Control</title>
-        <link rel="stylesheet" type="text/css" href="static/general.css">
-    </head>
-    <body>
-        <div class="login_box">
-            <h2>Authentication</h2>
-            <input id="login" type="text" placeholder="Login">
-            <input id="pass" type="password" placeholder="Password">
-            <div>
-                <button onclick="server.login(document.getElementById('login').value, document.getElementById('pass').value)">Log-in</button>
-            </div>
-        </div>
-    </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="static/style.css">
+	<link rel="stylesheet" href="static/media.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+	<title>Library Control - Authorization</title>
+</head>
+<body>
+	<header>
+		<div class="container">
+			<div class="block1">
+				<div class="logo">
+					<a href="">
+						<img src="static/images/aitu-logo-3-400x205.png" alt="">
+					</a>
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<div class="read1">
+		<div class="container">
+			<div class="log_in">
+				<div class="login">
+					<div class="form">
+						<p>Login here...</p>
+						<p>Username:</p>
+						<input id="login" type="text">
+						<p>Password:</p>
+						<input id="pass" type="password">
+						<button onclick="server.login(document.getElementById('login').value, document.getElementById('pass').value)">Login</button>
+					</div>
+				</div>
+				<div class="log_img">
+					<img src="static/images/books_720_min_min.jpg" alt="">
+				</div>
+			</div>
+		</div>
+	</div>
+
+<footer>
+	<div class="container">
+		<div class="footer">
+			<div class="logo">
+				<a href="">
+				<img src="static/images/aitu-logo-white-2-300x154 (1).png" alt="">
+				</a>
+			</div>
+			<div class="address">
+				<p>Нур-Султан <br>
+				Бизнес-центр EXPO, блок C.1. <br>
+				Казахстан, 010000</p>
+			</div>
+			<div class="info">
+				<a href="tel:+7 (7172)645-710">+7 (7172)645-710</a>
+				<a href="mailto:info@astanait.edu.kz">info@astanait.edu.kz</a>
+			</div>
+		</div>
+	</div>
+</footer>
+</body>
 </html>

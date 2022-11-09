@@ -1,0 +1,51 @@
+<html>
+    <head>
+        <title>Library Control</title>
+    </head>
+    <body>
+        <div style="overflow: hidden;">
+            <div style="float: left;">
+                <p>Reader ID: {{userdata[0]}}</p>
+                <p>Fullname: {{userdata[1]}} {{userdata[2]}}</p>
+            </div>
+            <button onclick="server.deauth()" style="float: right; margin: 10px;">Logout</button>
+        </div>
+        <p>Your borrows</p>
+        {% if borrows %}
+        <table>
+            <tr>
+                <th>Reader</th>
+                <th>Book</th>
+                <th>Taking</th>
+                <th>Return</th>
+                <th>Status</th>
+            </tr>
+            {% for borrow_id, reader_id, reader_name, book_id, book_name, book_author, taking_date, taking_time, return_date, return_time, status in borrows %}
+                <tr>
+                    <td>ID {{reader_id}}<br>
+                        {{reader_name}}</td>
+                    <td>ID {{book_id}}<br>
+                        {{book_name}}</td>
+                    <td>{{taking_date}}<br>
+                        {{taking_time}}</td>
+                    {% if return_date %}
+                    <td>{{return_date}}<br>
+                        {{return_time}}</td>
+                    {% else %}
+                    <td>Expected</td>
+                    {% endif %}
+                    {% if status == 'Overdue' %}
+                    <td style="color: red;">{{status}}</td>
+                    {% endif %}
+                    {% if status == 'Expected' %}
+                    <td style="color: blue;">{{status}}</td>
+                    {% endif %}
+                    {% if status == 'Submitted' %}
+                    <td style="color: green;">{{status}}</td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+    </body>
+</html>

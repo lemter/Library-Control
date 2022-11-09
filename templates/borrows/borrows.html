@@ -42,7 +42,15 @@
                     {% else %}
                     <td>Expected</td>
                     {% endif %}
-                    <td>{{status}}</td>
+                    {% if status == 'Overdue' %}
+                    <td style="color: red;">{{status}}</td>
+                    {% endif %}
+                    {% if status == 'Expected' %}
+                    <td style="color: blue;">{{status}}</td>
+                    {% endif %}
+                    {% if status == 'Submitted' %}
+                    <td style="color: green;">{{status}}</td>
+                    {% endif %}
                     <td><button class="borrow_btn" onclick="window.location.replace('/borrows/' + ({{borrow_id}}))">Info</button></td>
                 </tr>
                 {% endfor %}

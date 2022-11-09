@@ -15,7 +15,9 @@
             <h3>Add new reader</h3>
             <input type="text" id="reader_name" placeholder="Reader first name">
             <input type="text" id="reader_lastname" placeholder="Reader last name">
-            <button onclick="server.addReader(document.getElementById('reader_name').value, document.getElementById('reader_lastname').value)")>Add reader</button>
+            <input type="text" id="username" placeholder="Username">
+            <input type="text" id="password" placeholder="Password">
+            <button onclick="server.addReader(document.getElementById('reader_name').value, document.getElementById('reader_lastname').value, document.getElementById('username').value, document.getElementById('password').value)")>Add reader</button>
         </div>
         <div>
             <h3>Readers list</h3>

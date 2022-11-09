@@ -45,11 +45,19 @@ class LibControl:
         connection.commit()
         self.js.window.location.replace("/books")
 
-    def addReader(self, f_name, l_name):
-        if f_name and l_name:
-            cursor.execute(f"INSERT INTO readers (reader_f_name, reader_l_name) VALUES ('{f_name}', '{l_name}')")
-            connection.commit()
-            self.js.window.location.reload()
+    def addReader(self, f_name, l_name, username, passw):
+        if f_name and l_name and username and passw:
+            cursor.execute(f"SELECT * FROM users WHERE username = '{username}'")
+            user = cursor.fetchone()
+            if not user:
+                cursor.execute(f"INSERT INTO readers (reader_f_name, reader_l_name) VALUES ('{f_name}', '{l_name}') RETURNING reader_id")
+                reader_id = cursor.fetchone()[0]
+                connection.commit()
+                cursor.execute(f"INSERT INTO users VALUES('{username}', '{passw}', 0, {reader_id})")
+                connection.commit()
+                self.js.window.location.reload()
+            else:
+                self.js.alrt("Username is taken.")
         else:
             self.js.alert("All text fields must be filled.")
 
@@ -104,7 +112,7 @@ class LibControl:
             self.js.alert("You need to fill taking date and time fields.")
 
     def submite_borrow(self, borrow_id):
-        cursor.execute(f"UPDATE borrows SET return_date = {datetime.now().strftime('%m/%d/%Y')}, return_time = {datetime.now().strftime('%H:%M')} WHERE borrow_id = {borrow_id}")
+        cursor.execute(f"UPDATE borrows SET return_date = '{datetime.now().strftime('%m/%d/%Y')}', return_time = '{datetime.now().strftime('%H:%M')}' WHERE borrow_id = {borrow_id}")
         connection.commit()
         self.js.window.location.reload()
 
@@ -114,7 +122,7 @@ class LibControl:
         self.js.window.location.replace("/borrows")
 
     def mainpage(self, reader_id):
-        self.js.window.location.replace(f"$reader_id={reader_id}")
+        self.js.window.location.replace(f"/home?reader_id={reader_id}")
 
     def login(self, login, passw):
         cursor.execute(f"SELECT * FROM users WHERE username = '{login}' AND password = '{passw}'")
@@ -124,6 +132,7 @@ class LibControl:
             session['username'] = login
             session['password'] = passw
             session['level'] = user[2]
+            session['reader_id'] = user[3]
             self.js.window.location.replace('/')
         else:
             self.js.alert("Incorrect login or password!")
@@ -133,6 +142,7 @@ class LibControl:
         session.pop('username')
         session.pop('password')
         session.pop('level')
+        session.pop('reader_id')
         self.js.window.location.replace('/')
 
     def regist(self, login, passw, reader_id):
@@ -140,18 +150,13 @@ class LibControl:
         connection.commit()
         self.js.window.location.replace('/')
 
-@app.route("/")
-@app.route("/home")
+@app.route("/", methods=['POST', 'GET'])
+@app.route("/home", methods=['POST', 'GET'])
 def index():
     if not 'loggedin' in session: return redirect('/auth')
     if session["level"] == 0:
-        pass
-    elif session["level"] == 1:
-        pass
-
-    r_id = request.args.get('reader_id')
-    borrows = []
-    if r_id:
+        cursor.execute(f"SELECT * FROM readers WHERE reader_id = {session['reader_id']}")
+        userdata = cursor.fetchone()
         cursor.execute(f"""
         SELECT borrow_id,
                borrows.reader_id,
@@ -170,28 +175,28 @@ def index():
         FROM borrows
         JOIN readers ON (borrows.reader_id = readers.reader_id)
         JOIN books ON (borrows.book_id = books.book_id)
-        WHERE borrows.reader_id = {r_id}""")
+        WHERE borrows.reader_id = {session['reader_id']}""")
         borrows = cursor.fetchall()
-    return LibControl.render(render_template("index.html", borrows = borrows))
+        return LibControl.render(render_template("reader_index.html", userdata = userdata, borrows = borrows))
+    elif session["level"] == 1:
+        return LibControl.render(render_template("index.html"))
 
 @app.route("/books", methods=['POST', 'GET'])
 def books():
     if not 'loggedin' in session: return redirect('/auth')
     if session["level"] == 0:
-        pass
+        return redirect('/')
     elif session["level"] == 1:
-        pass
-
-    if request.method == 'GET':
-        cursor.execute('SELECT * FROM books ORDER BY book_id ASC')
-        books = cursor.fetchall()
-        return LibControl.render(render_template("books/books.html", books = books))
+        if request.method == 'GET':
+            cursor.execute('SELECT * FROM books ORDER BY book_id ASC')
+            books = cursor.fetchall()
+            return LibControl.render(render_template("books/books.html", books = books))
 
 @app.route("/books/<book_id>", methods=['POST', 'GET'])
 def bookSettings(book_id):
     if not 'loggedin' in session: return redirect('/auth')
     if session["level"] == 0:
-        pass
+        return redirect('/')
     elif session["level"] == 1:
         pass
 
@@ -206,7 +211,7 @@ def bookSettings(book_id):
 def readers():
     if not 'loggedin' in session: return redirect('/auth')
     if session["level"] == 0:
-        pass
+        return redirect('/')
     elif session["level"] == 1:
         pass
 
@@ -219,7 +224,7 @@ def readers():
 def readerSettings(reader_id):
     if not 'loggedin' in session: return redirect('/auth')
     if session["level"] == 0:
-        pass
+        return redirect('/')
     elif session["level"] == 1:
         pass
 
@@ -235,7 +240,7 @@ def readerSettings(reader_id):
 def borrows():
     if not 'loggedin' in session: return redirect('/auth')
     if session["level"] == 0:
-        pass
+        return redirect('/')
     elif session["level"] == 1:
         pass
 
@@ -265,7 +270,7 @@ def borrows():
 def borrow_info(borrow_id):
     if not 'loggedin' in session: return redirect('/auth')
     if session["level"] == 0:
-        pass
+        return redirect('/')
     elif session["level"] == 1:
         pass
 

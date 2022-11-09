@@ -1,49 +1,96 @@
-<html>
-    <head>
-        <title>Library Control</title>
-        <link rel="stylesheet" href="static/general.css">
-    </head>
-    <body>
-        <div class="top-nav">
-            <a href="/home">Home</a>
-            <a href="/books">Books</a>
-            <a href="/readers">Readers</a>
-            <a href="/borrows">Borrows</a>
-            <a class="logout" onclick="server.deauth()">Logout</a>
-        </div>
-        <div>
-            <h3>Find your borrows</h3>
-            <input id="reader_id" type="text" placeholder="Your reader id">
-            <button onclick="server.mainpage(document.getElementById('reader_id').value)">Found</button>
-        </div>
-        {% if borrows %}
-        <table>
-            <tr>
-                <th>Reader</th>
-                <th>Book</th>
-                <th>Taking</th>
-                <th>Return</th>
-                <th>Status</th>
-            </tr>
-            {% for borrow_id, reader_id, reader_name, book_id, book_name, book_author, taking_date, taking_time, return_date, return_time, status in borrows %}
-                <tr>
-                    <td>ID {{reader_id}}<br>
-                        {{reader_name}}</td>
-                    <td>ID {{book_id}}<br>
-                        {{book_name}}</td>
-                    <td>{{taking_date}}<br>
-                        {{taking_time}}</td>
-                    {% if return_date %}
-                    <td>{{return_date}}<br>
-                        {{return_time}}</td>
-                    {% else %}
-                    <td>Expected</td>
-                    {% endif %}
-                    <td>{{status}}</td>
-                    <td><button class="borrow_btn" onclick="window.location.replace('/borrows/' + ({{borrow_id}}))">Info</button></td>
-                </tr>
-            {% endfor %}
-        </table>
-        {% endif %}
-    </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="static/style.css">
+	<link rel="stylesheet" href="static/media.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+	<title>Library Control - Home</title>
+</head>
+<body>
+	
+	<header>
+		<div class="container">
+			<div class="block1">
+				<div class="logo">
+					<a href="">
+						<img src="static/images/aitu-logo-3-400x205.png" alt="">
+					</a>
+				</div>
+				<nav>
+					<ul>
+						<li><a href="/home">Home</a></li>
+						<li><a href="/borrows">Borrows</a></li>
+						<li><a href="/books">Books</a></li>
+						<li><a href="/readers">Readers</a></li>
+						<li><a style="color: red; cursor: pointer;" onclick="server.deauth()">Logout</a></li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+	</header>
+
+	<div class="block2">
+		<div class="images">
+			<div class="slider">
+				<div class="container">
+				<h1>Studying is not about time. It’s about effort</h1>
+				</div>
+				<img src="static/images/DSC00415.jpg" alt="">	
+			</div>
+		</div>
+			<div class="slickarrow">
+				<div class="container">
+					<div class="mask">
+				<div class="prev">
+						<svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M13.7326 1.10932e-06H30.2674C32.6781 -0.000968135 35.0466 0.633223 37.1347 1.83833C39.2227 3.0437 40.9563 4.77733 42.1617 6.86535C43.3667 8.95337 44.0009 11.3219 44 13.7326V30.2674C44.001 32.6781 43.3668 35.0466 42.1617 37.1346C40.9563 39.2227 39.2227 40.9563 37.1347 42.1617C35.0466 43.3667 32.6781 44.0009 30.2674 44H13.7326C11.3219 44.001 8.95337 43.3668 6.86535 42.1617C4.77732 40.9563 3.04371 39.2227 1.83833 37.1346C0.633293 35.0466 -0.000907898 32.6781 0 30.2674V13.7326C-0.000968933 11.3219 0.633228 8.95337 1.83833 6.86535C3.04371 4.77733 4.77732 3.0437 6.86535 1.83833C8.95337 0.633289 11.3219 -0.000908668 13.7326 1.10932e-06ZM11.1851 23.9313L19.522 32.2682C20.184 32.9301 21.1487 33.1886 22.053 32.9463C22.957 32.704 23.6632 31.9977 23.9055 31.0935C24.1478 30.1895 23.8893 29.2248 23.2274 28.5628L19.2209 24.5935H30.967C31.9004 24.5935 32.7627 24.0957 33.2295 23.2874C33.696 22.4793 33.696 21.4836 33.2295 20.6753C32.7626 19.867 31.9004 19.3691 30.967 19.3691H19.2772L23.2187 15.4231C23.8807 14.7611 24.1391 13.7964 23.8968 12.8924C23.6545 11.9881 22.9482 11.2818 22.0443 11.0396C21.14 10.7973 20.1753 11.0557 19.5137 11.7177L11.1768 20.0546C10.6637 20.5686 10.3901 21.2742 10.4218 21.9999V22.0832C10.4201 22.7765 10.6954 23.4414 11.1858 23.9312L11.1851 23.9313Z" fill="#1B70CA"/>
+						</svg>
+				</div>
+		   </div>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="block3">
+		<div class="container">
+			<div class="about">
+				<h1>About us</h1>
+				<div class="about_us">
+				<div class="about_img">
+					<img src="static/images/thumbnail-600x333.jpg" alt="">
+				</div>
+				<div class="about_text">
+					<p>Transformation into a basic structural center for information support of current educational, research and pedagogical processes and stimulation of their potential development, creating conditions for continuous acquisition and updating of knowledge focused on the needs of scientific and technological development of the promising future, a center for the dissemination of knowledge, spiritual and intellectual communication and culture.</p>
+				</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<footer>
+	<div class="container">
+		<div class="footer">
+			<div class="logo">
+				<a href="">
+				<img src="static/images/aitu-logo-white-2-300x154 (1).png" alt="">
+				</a>
+			</div>
+			<div class="address">
+				<p>Нур-Султан <br>
+				Бизнес-центр EXPO, блок C.1. <br>
+				Казахстан, 010000</p>
+			</div>
+			<div class="info">
+				<a href="tel:+7 (7172)645-710">+7 (7172)645-710</a>
+				<a href="mailto:info@astanait.edu.kz">info@astanait.edu.kz</a>
+			</div>
+		</div>
+	</div>
+</footer>
+</body>
 </html>
