@@ -1,6 +1,6 @@
 # Advanced Programming 1 (Python)
 ## Final project
-Created by:
+### Created by:
 - Karim Zhansarin (CS-2101)
 - Aruzhan Kenderbaeva (CS-2101)
 
