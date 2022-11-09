@@ -1,8 +1,8 @@
 # Advanced Programming 1 (Python)
 ## Final project
 Created by:
-Karim Zhansarin (CS-2101)
-Aruzhan Kenderbaeva (CS-2101)
+- Karim Zhansarin (CS-2101)
+- Aruzhan Kenderbaeva (CS-2101)
 
 ### Installation
 1) Download all depencides from [requirements](requirements.txt).
