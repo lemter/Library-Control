@@ -1,29 +1,50 @@
-<html>
-    <head>
-        <title>Library Control</title>
-        <link rel="stylesheet" href="\static/general.css">
-    </head>
-    <body>
-        <div class="top-nav">
-            <a href="/home">Home</a>
-            <a href="/books">Books</a>
-            <a href="/readers">Readers</a>
-            <a href="/borrows">Borrows</a>
-            <a class="logout" onclick="server.deauth()">Logout</a>
-        </div>
-        <div>
-            <h3>{{book_name}}</h3>
-            <p>Book ID: {{book_id}}</p>
-            <p>Author: {{book_author}}</p>
-            <div>
-                <input id="new_name" type="text" placeholder="New book name">
-                <button onclick="server.changeBookName({{book_id}}, document.getElementById('new_name').value)">Change name</button>
-            </div>
-            <div>
-                <input id="new_author" type="text" placeholder="New author full name">
-                <button onclick="server.changeAuthorName({{book_id}}, document.getElementById('new_author').value)">Change author</button>
-            </div>
-            <button onclick="server.deleteBook({{book_id}})">Delete</button>
-        </div>
-    </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="\static/style.css">
+	<link rel="stylesheet" href="\static/media.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+	<title>Book - {{book_name}}</title>
+
+</head>
+<body>
+	<header>
+		<div class="container">
+			<div class="block1">
+				<div class="logo">
+					<a href="">
+						<img src="\static/images/aitu-logo-3-400x205.png" alt="">
+					</a>
+				</div>
+				<nav>
+					<ul>
+						<li><a href="/home">Home</a></li>
+						<li><a href="/borrows">Borrows</a></li>
+						<li><a href="/books">Books</a></li>
+						<li><a href="/readers">Readers</a></li>
+						<li><a style="color: red; cursor: pointer;" onclick="server.deauth()">Logout</a></li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+	</header>
+	<div class="info_box">
+		<h3>{{book_name}}</h3>
+		<p>Book ID: {{book_id}}</p>
+		<p>Author: {{book_author}}</p>
+		<div>
+			<input id="new_name" type="text" placeholder="New book name">
+			<button onclick="server.changeBookName({{book_id}}, document.getElementById('new_name').value)">Change name</button>
+		</div>
+		<div>
+			<input id="new_author" type="text" placeholder="New author full name">
+			<button onclick="server.changeAuthorName({{book_id}}, document.getElementById('new_author').value)">Change author</button>
+		</div>
+		<button onclick="server.deleteBook({{book_id}})">Delete from database</button>
+	</div>
+</body>
 </html>

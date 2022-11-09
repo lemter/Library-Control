@@ -1,17 +1,38 @@
-<html>
-    <head>
-        <title>Library Control</title>
-    </head>
-    <body>
-        <div style="overflow: hidden;">
-            <div style="float: left;">
-                <p>Reader ID: {{userdata[0]}}</p>
-                <p>Fullname: {{userdata[1]}} {{userdata[2]}}</p>
-            </div>
-            <button onclick="server.deauth()" style="float: right; margin: 10px;">Logout</button>
-        </div>
-        <p>Your borrows</p>
-        {% if borrows %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="static/style.css">
+	<link rel="stylesheet" href="static/media.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+	<title>Library Control - Template</title>
+
+</head>
+<body>
+	<header>
+		<div class="container">
+			<div class="block1">
+				<div class="logo">
+					<a href="">
+						<img src="static/images/aitu-logo-3-400x205.png" alt="">
+					</a>
+				</div>
+				<nav>
+					<ul style="display: inline;">
+						<li><a style="text-align: right; color: red; cursor: pointer;" onclick="server.deauth()">Logout</a></li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+	</header>
+	<div class="info_box">
+		<p>Reader ID: {{userdata[0]}}</p>
+        <p>Fullname: {{userdata[1]}} {{userdata[2]}}</p>
+	</div>
+	{% if borrows %}
         <table>
             <tr>
                 <th>Reader</th>
@@ -47,5 +68,5 @@
             {% endfor %}
         </table>
         {% endif %}
-    </body>
+</body>
 </html>

@@ -175,7 +175,8 @@ def index():
         FROM borrows
         JOIN readers ON (borrows.reader_id = readers.reader_id)
         JOIN books ON (borrows.book_id = books.book_id)
-        WHERE borrows.reader_id = {session['reader_id']}""")
+        WHERE borrows.reader_id = {session['reader_id']}
+        ORDER BY borrows.taking_date DESC, taking_time DESC""")
         borrows = cursor.fetchall()
         return LibControl.render(render_template("reader_index.html", userdata = userdata, borrows = borrows))
     elif session["level"] == 1:
@@ -188,7 +189,7 @@ def books():
         return redirect('/')
     elif session["level"] == 1:
         if request.method == 'GET':
-            cursor.execute('SELECT * FROM books ORDER BY book_id ASC')
+            cursor.execute('SELECT * FROM books ORDER BY book_name, book_author ASC')
             books = cursor.fetchall()
             return LibControl.render(render_template("books/books.html", books = books))
 
@@ -198,14 +199,12 @@ def bookSettings(book_id):
     if session["level"] == 0:
         return redirect('/')
     elif session["level"] == 1:
-        pass
-
-    if request.method == 'GET':
-        cursor.execute(f"SELECT book_name, book_author FROM books WHERE book_id = {book_id}")
-        book = cursor.fetchone()
-        book_name = book[0]
-        book_author = book[1]
-        return LibControl.render(render_template("books/book_settings.html", book_id = book_id, book_name = book_name, book_author = book_author))
+        if request.method == 'GET':
+            cursor.execute(f"SELECT book_name, book_author FROM books WHERE book_id = {book_id}")
+            book = cursor.fetchone()
+            book_name = book[0]
+            book_author = book[1]
+            return LibControl.render(render_template("books/book_settings.html", book_id = book_id, book_name = book_name, book_author = book_author))
 
 @app.route("/readers", methods=['POST', 'GET'])
 def readers():
@@ -213,12 +212,10 @@ def readers():
     if session["level"] == 0:
         return redirect('/')
     elif session["level"] == 1:
-        pass
-
-    if request.method == 'GET':
-        cursor.execute('SELECT * FROM readers ORDER BY reader_f_name, reader_l_name ASC')
-        readers = cursor.fetchall()
-        return LibControl.render(render_template("readers/readers.html", readers = readers))
+        if request.method == 'GET':
+            cursor.execute('SELECT * FROM readers ORDER BY reader_f_name, reader_l_name ASC')
+            readers = cursor.fetchall()
+            return LibControl.render(render_template("readers/readers.html", readers = readers))
 
 @app.route("/readers/<reader_id>", methods=['POST', 'GET'])
 def readerSettings(reader_id):
@@ -226,14 +223,12 @@ def readerSettings(reader_id):
     if session["level"] == 0:
         return redirect('/')
     elif session["level"] == 1:
-        pass
-
-    if request.method == 'GET':
-        cursor.execute(f"SELECT reader_f_name, reader_l_name FROM readers WHERE reader_id = {reader_id}")
-        reader = cursor.fetchone()
-        reader_name = reader[0]
-        reader_lastname = reader[1]
-        return LibControl.render(render_template("readers/reader_settings.html", reader_id = reader_id, reader_name = reader_name, reader_lastname = reader_lastname))
+        if request.method == 'GET':
+            cursor.execute(f"SELECT reader_f_name, reader_l_name FROM readers WHERE reader_id = {reader_id}")
+            reader = cursor.fetchone()
+            reader_name = reader[0]
+            reader_lastname = reader[1]
+            return LibControl.render(render_template("readers/reader_settings.html", reader_id = reader_id, reader_name = reader_name, reader_lastname = reader_lastname))
 
 
 @app.route("/borrows", methods=['POST', 'GET'])
@@ -242,11 +237,9 @@ def borrows():
     if session["level"] == 0:
         return redirect('/')
     elif session["level"] == 1:
-        pass
-
-    if request.method == 'GET':
-        cursor.execute("""
-        SELECT borrow_id,
+        if request.method == 'GET':
+            cursor.execute("""
+            SELECT borrow_id,
                borrows.reader_id,
                CONCAT(reader_f_name, ' ', reader_l_name) AS "reader_name",
 	           borrows.book_id,
@@ -260,11 +253,11 @@ def borrows():
 	   		        WHEN (return_date is null AND taking_date + interval '30 day' <= CURRENT_DATE) THEN ('Overdue')
 			        WHEN (return_date is not null) THEN ('Submitted')
 			        END AS "status"
-        FROM borrows
-        JOIN readers ON (borrows.reader_id = readers.reader_id)
-        JOIN books ON (borrows.book_id = books.book_id)""")
-        borrows = cursor.fetchall()
-        return LibControl.render(render_template("borrows/borrows.html", borrows = borrows))
+            FROM borrows
+            JOIN readers ON (borrows.reader_id = readers.reader_id)
+            JOIN books ON (borrows.book_id = books.book_id)""")
+            borrows = cursor.fetchall()
+            return LibControl.render(render_template("temp_pages/borrows.html", borrows = borrows))
 
 @app.route("/borrows/<borrow_id>", methods=['POST', 'GET'])
 def borrow_info(borrow_id):
@@ -272,11 +265,9 @@ def borrow_info(borrow_id):
     if session["level"] == 0:
         return redirect('/')
     elif session["level"] == 1:
-        pass
-
-    if request.method == 'GET':
-        cursor.execute(f"""
-        SELECT borrow_id,
+        if request.method == 'GET':
+            cursor.execute(f"""
+            SELECT borrow_id,
                borrows.reader_id,
                CONCAT(reader_f_name, ' ', reader_l_name) AS "reader_name",
 	           borrows.book_id,
@@ -290,12 +281,12 @@ def borrow_info(borrow_id):
 	   		        WHEN (return_date is null AND taking_date + interval '30 day' <= CURRENT_DATE) THEN ('Overdue')
 			        WHEN (return_date is not null) THEN ('Submitted')
 			        END AS "status"
-        FROM borrows
-        JOIN readers ON (borrows.reader_id = readers.reader_id)
-        JOIN books ON (borrows.book_id = books.book_id)
-        WHERE borrow_id = {borrow_id}""")
-        borrow = cursor.fetchone()
-        return LibControl.render(render_template("borrows/borrow_info.html", borrow = borrow))
+            FROM borrows
+            JOIN readers ON (borrows.reader_id = readers.reader_id)
+            JOIN books ON (borrows.book_id = books.book_id)
+            WHERE borrow_id = {borrow_id}""")
+            borrow = cursor.fetchone()
+            return LibControl.render(render_template("temp_pages/borrow_info.html", borrow = borrow))
 
 @app.route("/auth")
 def auth():

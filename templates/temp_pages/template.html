@@ -8,7 +8,7 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-	<title>Library Control - Books</title>
+	<title>Library Control - Template</title>
 
 </head>
 <body>
@@ -32,27 +32,10 @@
 			</div>
 		</div>
 	</header>
-	<div class="adding_form">
-		<p>Add new book</p>
-		<input type="text" id="book_name" placeholder="Book name">
-		<input type="text" id="book_author" placeholder="Book author full name">
-		<button onclick="server.addBook(document.getElementById('book_name').value, document.getElementById('book_author').value)")>Add book</button>
+
+	<div class="book1">
+		<div class="container">
+		</div>
 	</div>
-	<table class="table_list" id="books_table">
-		<tr>
-			<th>ID</th>
-			<th>Name</th>
-			<th>Author</th>
-			<th>Change</th>
-		</tr>
-		{% for index, name, author in books %}
-		<tr>
-			<td>{{index}}</td>
-			<td>{{name}}</td>
-			<td>{{author}}</td>
-			<td><button class="book_btn" onclick="window.location.replace('/books/' + ({{index}}))">Change</button></td>
-		</tr>
-		{% endfor %}
-	</table>
 </body>
 </html>

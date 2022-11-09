@@ -171,3 +171,27 @@ footer {
 .log_img img {
 	border:10px solid rgba(182,182,182,0.8);
 }
+table {
+	width: 100%;
+	border: 1px solid;
+}
+td, th {
+	padding: 10px;
+	text-align: center;
+	border: 1px solid;
+}
+button {
+	padding: 4px;
+}
+.adding_form, .info_box {
+	margin: 10px;
+	border: 1px solid;
+	padding: 10px;
+}
+.adding_form p {
+	margin-bottom: 10px;
+}
+.info_box > * {
+	margin-top: 4px;
+	margin-bottom: 4px;
+}
