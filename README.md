@@ -12,3 +12,4 @@
 
 ### Usage
 1) Go to your ip-address or domain web-page.
+2) Explore this site.
